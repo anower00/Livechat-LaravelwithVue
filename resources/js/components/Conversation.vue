@@ -1,6 +1,6 @@
 <template>
     <div class="conversation">
-        <h1>{{ contact ? contact.name : 'select a contact'}}</h1>
+        <h1>{{ contact ? contact.name : 'Select a Contact' }}</h1>
          <MessagesFeed :contact="contact" :messages="messages"/>
          <MessageComposer @send="sendMessage"/>
     </div>
@@ -11,21 +11,27 @@
     import MessageComposer from './MessageComposer';
 
 export default {
-    props:{
-        contact:{
-            type: Object,
-            default:null
+    props: {
+            contact: {
+                type: Object,
+                default: null
+            },
+            messages: {
+                type: Array,
+                default: []
+            }
         },
-        messages:{
-            type: Array,
-            default: []
-        }
-    },
     methods:{
         sendMessage(text){
             console.log(text);
         }
-    }
-    
+    },
+    components: {MessagesFeed, MessageComposer}
 }
 </script>
+
+<style lang="scss" scoped>
+.conversation {
+    flex: 5;
+}
+</style>

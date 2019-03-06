@@ -1,7 +1,7 @@
 <template>
     <div class="contacts-list">
         <ul>
-            <li v-for="contact in contacts" :key="contact.id">
+            <li v-for="(contact,index) in contacts" :key="contact.id" @click="selectContact(index,contact)" :class="{ 'selected': contact == selected }">
                 <div class="avatar">
                     <img :src="contact.profile_image" :alt="contact.name">
                 </div>
@@ -21,6 +21,30 @@ export default {
             type:Array,
             default:[]
         }
+    },
+    data(){
+        return{
+            selected: 0
+        };
+    },
+    methods:{
+        selectContact(index, contact){
+            this.selected= index;
+            this.$emit('selected' ,contact);
+        }
     }
 }
 </script>
+<style lang="scss" scoped>
+.contacts-list {
+    flex: 2;
+    max-height: 600px;
+    overflow: scroll;
+    border-left: 1px solid #989898;
+
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+     }
+}
+</style>
