@@ -11,7 +11,7 @@ class ContactsController extends Controller
 {
     public function get()
     {
-        $contacts  = User::all();
+        $contacts  = User::where('id', '!=', auth()->id())->get();
 
         return response()->json($contacts);
     }
@@ -31,28 +31,10 @@ class ContactsController extends Controller
             'text' => $request->text
         ]);
 
+        broadcast(new NewMessage($message));
+
         return response()->json($message);
     }
 
-    // public function send(Request $request)
-    // {
-    //     // $message = Message::create([
-    //     //     'from' => auth()->user()->id(),
-    //     //     'to' => $request->contact_id,
-    //     //     'text' => $request->text
-    //     // ]);
-    //         dd($request);
-    //     $user = auth()->user()->id();
-
-    //     dd($user);
-
-    //     $message = new Message();
-    //     $message->from = $user;
-    //     $message->to = $request->contact_id;
-    //     $message->text= $request->text;
-
-    //     dd($message);
-
-    //     return response()->json($message);
-    // }
+    
 }
